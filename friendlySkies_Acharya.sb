@@ -1,0 +1,181 @@
+'Devang Acharya
+'November 5, 2015
+'Fly Skies
+
+'Setting Up The Window
+GraphicsWindow.Show()
+GraphicsWindow.Title = "Fly the Friendly Skies!"
+GraphicsWindow.Width="600"
+GraphicsWindow.Height="500"
+GraphicsWindow.BrushColor="Black"
+GraphicsWindow.BackgroundColor = "SkyBlue"
+
+PlanePic = Program.Directory + "\plane.jpg"
+GraphicsWindow.DrawResizedImage(PlanePic,350,20,200,120)
+
+MealPic = Program.Directory + "\meal.gif"
+GraphicsWindow.DrawResizedImage(MealPic,350,140,200,140)
+
+
+'create Control
+lblFare = FCControls.AddLabel(175,25, "Select Fare Type: ")
+FCControls.Move(lblFare,45,120)
+
+chkFirst = FCControls.AddCheckBox("First class")
+FCControls.Move(chkFirst,50,150)
+
+chkBclass = FCControls.AddCheckBox("Business class")
+FCControls.Move(chkBclass,50,170)
+
+chkEclass = FCControls.AddCheckBox("Economy class")
+FCControls.Move(chkEclass,50,190)
+
+
+
+
+'Make checkboxs Work like radio buttons
+
+FCControls.RegisterMouseDownEvent(chkFirst, "chkFirst_Click")
+FCControls.RegisterMouseDownEvent(chkBclass, "chkBclass_Click")
+FCControls.RegisterMouseDownEvent(chkEclass, "chkEclass_Click")
+
+
+
+
+Sub chkFirst_Click
+  FCControls.SetChecked(chkBclass,"False")
+  FCControls.SetChecked(chkEclass, "False")
+ 
+  
+ EndSub
+ 
+ Sub chkBclass_Click
+  FCControls.SetChecked(chkFirst,"False")
+  FCControls.SetChecked(chkEclass, "False")
+  
+  
+EndSub
+
+Sub chkEclass_Click
+  FCControls.SetChecked(chkFirst,"False")
+  FCControls.SetChecked(chkBclass, "False")
+  
+EndSub
+
+
+
+
+
+
+
+
+lblSeat = FCControls.AddLabel(500,25,"")
+FCControls.Move(lblSeat,50,285)
+
+lblMovie = FCControls.AddLabel(500,25,"")
+FCControls.Move(lblMovie,50, 315)
+
+lblMeal = FCControls.AddLabel(500,25,"")
+FCControls.Move(lblMeal,50,350)
+
+lblThankYou = FCControls.AddLabel(400,25,"")
+FCControls.Move(lblThankYou,50, 385)
+
+
+btnGetFare = FCControls.AddButton(120,50,"Get Fare Details")
+FCControls.Move(btnGetFare, 130, 435)
+
+btnClear = FCControls.AddButton(100,50,"Clear")
+FCControls.Move(btnClear, 255, 435)
+
+btnClose = FCControls.AddButton(100,50,"Close")
+FCControls.Move(btnClose,360,435)
+
+
+FCControls.RegisterMouseDownEvent(btnGetFare, "btnGetFare_Click")
+FCControls.RegisterMouseDownEvent(btnClear,"btnClear_Click")
+FCControls.RegisterMouseDownEvent(btnClose, "btnClose_Click")
+
+
+Sub btnGetFare_Click
+  
+  If FCControls.GetChecked(chkFirst) = "True" or FCControls.GetChecked(chkBclass) = "True" or FCControls.GetChecked(chkEclass) = "True"  Then 
+  If FCControls.GetChecked(chkFirst) = "True" Then
+    SeatNumber = Math.GetRandomNumber(12) ' random num. from 1 to 12
+    MealA = "Filet mignon with truffled mushroom ragout"
+    MovieB = "Harry Potter and the Deathly Hallows, starring Daniel Radcliffe"
+   ThankYou = "Thakn you for flying frieldly skies. Enjoy your flight!"
+   ElseIf FCControls.GetChecked(chkBclass) = "True" then
+     SeatNumber = Math.GetRandomNumber(18) + 12 ' randomnumbers from 13 to 30
+     MealA = "Chicken cordon bleu and a backed potato"
+     MovieB = "Avatar, starring Sam worthington"
+     ThankYou = "Thakn you for flying frieldly skies. Enjoy your flight!" 
+  ElseIf FCControls.GetChecked(chkEclass) = "True" Then
+  
+  SeatNumber = Math.GetRandomNumber(115) + 30 ' randomnumbers from 31 to 145
+  MealA = "A bag of Peanuts"
+     MovieB = "Gigli, starring Ben Affleck"
+   ThankYou = "Thakn you for flying frieldly skies. Enjoy your flight!"
+ EndIf  
+   Else 
+  
+  SeatNumber ="Please select one of the catagory" 
+  MealA = "Please select one of the catagory"
+     MovieB = "Please select one of the catagory"
+    ThankYou = "Click a catagory and have a look"
+ 
+  
+ EndIf 
+  
+ FCControls.SetText(lblSeat, "Your seat number is: " + SeatNumber)
+ FCControls.SetText(lblMeal, "Your meal is: "+ MealA)
+ FCControls.SetText(lblMovie, "Your movie is: "+ MovieB)
+ FCControls.SetText(lblThankYou, ThankYou)
+ 
+
+EndSub
+   
+    
+  Sub btnClear_Click
+    FCControls.SetChecked(chkFirst,"False")
+    FCControls.SetChecked(chkBclass,"False")
+    FCControls.SetChecked(chkEclass,"False")
+   
+    FCControls.SetText(lblMovie,"")
+    FCControls.SetText(lblSeat, "")
+    FCControls.SetText(lblMeal,"")
+    FCControls.SetText(lblThankYou,"")
+  EndSub
+  
+  Sub btnClose_Click
+    quit = FCDialogs.AskForYesNo("Are you sure you want ot quit?")
+    If (quit = "Yes") Then
+      
+      Program.End()
+    EndIf
+    EndSub
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
